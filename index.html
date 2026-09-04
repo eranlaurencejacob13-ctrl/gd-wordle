@@ -2,92 +2,101 @@
 <html>
 <head>
   <title>Wordle Clone</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="board">
-    <div class="row">
-      <div class="tile"></div>
-      <div class="tile"></div>
-      <div class="tile"></div>
-      <div class="tile"></div>
-      <div class="tile"></div>
-    </div>
-    <div class="row">
-      <div class="tile"></div>
-      <div class="tile"></div>
-      <div class="tile"></div>
-      <div class="tile"></div>
-      <div class="tile"></div>
-    </div>
-    <div class="row">
-      <div class="tile"></div>
-      <div class="tile"></div>
-      <div class="tile"></div>
-      <div class="tile"></div>
-      <div class="tile"></div>
-    </div>
-    <div class="row">
-      <div class="tile"></div>
-      <div class="tile"></div>
-      <div class="tile"></div>
-      <div class="tile"></div>
-      <div class="tile"></div>
-    </div>
-    <div class="row">
-      <div class="tile"></div>
-      <div class="tile"></div>
-      <div class="tile"></div>
-      <div class="tile"></div>
-      <div class="tile"></div>
-    </div>
-    <div class="row">
-      <div class="tile"></div>
-      <div class="tile"></div>
-      <div class="tile"></div>
-      <div class="tile"></div>
-      <div class="tile"></div>
-    </div>
-  </div>
+  <div class="page">
+    <h1 class="title">
+      <span class="g-blue">G</span><span class="g-red">D</span> <span class="g-yellow">W</span><span class="g-green">o</span><span class="g-blue">r</span><span class="g-red">d</span><span class="g-yellow">l</span><span class="g-green">e</span>
+    </h1>
 
-  <div class="keyboard">
-    <div class="keyboard-row">
-      <button>Q</button>
-      <button>W</button>
-      <button>E</button>
-      <button>R</button>
-      <button>T</button>
-      <button>Y</button>
-      <button>U</button>
-      <button>I</button>
-      <button>O</button>
-      <button>P</button>
+    <div class="board">
+      <div class="row">
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+      </div>
+      <div class="row">
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+      </div>
+      <div class="row">
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+      </div>
+      <div class="row">
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+      </div>
+      <div class="row">
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+      </div>
+      <div class="row">
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+      </div>
     </div>
-    <div class="keyboard-row">
-      <button>A</button>
-      <button>S</button>
-      <button>D</button>
-      <button>F</button>
-      <button>G</button>
-      <button>H</button>
-      <button>J</button>
-      <button>K</button>
-      <button>L</button>
-    </div>
-    <div class="keyboard-row">
-      <button>Enter</button>
-      <button>Z</button>
-      <button>X</button>
-      <button>C</button>
-      <button>V</button>
-      <button>B</button>
-      <button>N</button>
-      <button>M</button>
-      <button>⌫</button>
-    </div>
-  </div>
 
-  <button id="restart-button">New Game</button>
+    <div class="keyboard">
+      <div class="keyboard-row">
+        <button>Q</button>
+        <button>W</button>
+        <button>E</button>
+        <button>R</button>
+        <button>T</button>
+        <button>Y</button>
+        <button>U</button>
+        <button>I</button>
+        <button>O</button>
+        <button>P</button>
+      </div>
+      <div class="keyboard-row">
+        <button>A</button>
+        <button>S</button>
+        <button>D</button>
+        <button>F</button>
+        <button>G</button>
+        <button>H</button>
+        <button>J</button>
+        <button>K</button>
+        <button>L</button>
+      </div>
+      <div class="keyboard-row">
+        <button class="wide-key">Enter</button>
+        <button>Z</button>
+        <button>X</button>
+        <button>C</button>
+        <button>V</button>
+        <button>B</button>
+        <button>N</button>
+        <button>M</button>
+        <button class="wide-key">⌫</button>
+      </div>
+    </div>
+
+    <button id="restart-button">New Game</button>
+  </div>
 
   <script src="words.js"></script>
   <script src="script.js"></script>
