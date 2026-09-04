@@ -2,7 +2,7 @@ const keyboardButtons = document.querySelectorAll(".keyboard-row button");
 const tiles = document.querySelectorAll(".tile");
 const restartButton = document.getElementById("restart-button");
 
-let answer = wordList[Math.floor(Math.random() * wordList.length)];
+let answer = answerList[Math.floor(Math.random() * answerList.length)];
 let currentRow = 0;
 let currentCol = 0;
 let gameOver = false;
@@ -88,6 +88,11 @@ function handleKey(key) {
     if (currentRow < 6 && currentCol === 5) {
       const { guess, results } = checkGuess();
 
+    if (!wordList.includes(guess)) {
+      alert("Not a valid word!");
+      return;
+    }
+
       let won = true;
       for (let i = 0; i < 5; i++) {
         const tileIndex = currentRow * 5 + i;
@@ -146,7 +151,7 @@ function finishGame() {
 }
 
 function resetGame() {
-  answer = wordList[Math.floor(Math.random() * wordList.length)];
+  answer = answerList[Math.floor(Math.random() * answerList.length)];
   currentRow = 0;
   currentCol = 0;
   gameOver = false;
