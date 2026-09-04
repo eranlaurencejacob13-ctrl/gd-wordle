@@ -7,6 +7,12 @@ let currentRow = 0;
 let currentCol = 0;
 let gameOver = false;
 
+let startTime = Date.now();
+let timerInterval = null;
+
+let saved = localStorage.getItem("leaderboard");
+let leaderboardData = saved ? JSON.parse(saved) : [];
+
 function checkGuess() {
   let guess = "";
   for (let i = 0; i < 5; i++) {
@@ -48,7 +54,6 @@ function checkGuess() {
 function colorKeyboardKey(letter, result) {
   for (const button of keyboardButtons) {
     if (button.textContent === letter) {
-      // Don't downgrade a key that's already marked "correct" from an earlier guess
       if (button.classList.contains("correct")) {
         return;
       }
@@ -56,6 +61,22 @@ function colorKeyboardKey(letter, result) {
       button.classList.add(result);
     }
   }
+}
+
+function formatDuration(ms) {
+  const totalSeconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+}
+
+function startTimer() {
+  clearInterval(timerInterval);
+  document.getElementById("current-timer").textContent = "0:00";
+  timerInterval = setInterval(function () {
+    const elapsed = Date.now() - startTime;
+    document.getElementById("current-timer").textContent = formatDuration(elapsed);
+  }, 1000);
 }
 
 function handleKey(key) {
@@ -82,9 +103,12 @@ function handleKey(key) {
 
       if (won) {
         gameOver = true;
+        clearInterval(timerInterval);
         alert("You win!");
+	finishGame();
       } else if (currentRow === 6) {
         gameOver = true;
+        clearInterval(timerInterval);
         alert("You lose! The word was " + answer);
       }
     }
@@ -103,11 +127,31 @@ function handleKey(key) {
   }
 }
 
+function finishGame() {
+  const durationMs = Date.now() - startTime;
+  let nickname = prompt("Game over! Enter your nickname (max 8 chars):");
+  if (!nickname) nickname = "Player";
+  nickname = nickname.slice(0, 8);
+
+  const newEntry = {
+    nickname: nickname,
+    realName: nickname,
+    timestamp: Date.now(),
+    durationMs: durationMs
+  };
+
+  leaderboardData.push(newEntry);
+  localStorage.setItem("leaderboard", JSON.stringify(leaderboardData));
+  renderLeaderboard(sortLeaderboard(leaderboardData));
+}
+
 function resetGame() {
   answer = wordList[Math.floor(Math.random() * wordList.length)];
   currentRow = 0;
   currentCol = 0;
   gameOver = false;
+  startTime = Date.now();
+  startTimer();		
 
   for (const tile of tiles) {
     tile.textContent = "";
@@ -117,6 +161,8 @@ function resetGame() {
   for (const button of keyboardButtons) {
     button.classList.remove("correct", "present", "absent");
   }
+
+  restartButton.blur();
 }
 
 for (const button of keyboardButtons) {
@@ -130,3 +176,38 @@ document.addEventListener("keydown", function (event) {
 });
 
 restartButton.addEventListener("click", resetGame);
+
+function renderLeaderboard(entries) {
+  const list = document.getElementById("leaderboard-list");
+  list.innerHTML = "";
+
+  const top10 = entries.slice(0, 10);
+
+  for (const entry of top10) {
+    const item = document.createElement("li");
+    item.textContent = `${entry.nickname} — ${formatDuration(entry.durationMs)}`;
+    list.appendChild(item);
+  }
+}
+
+function sortLeaderboard(entries) {
+  for (let i = 0; i < entries.length; i++) {
+    for (let j = 0; j < entries.length - 1; j++) {
+      if (entries[j].durationMs > entries[j+1].durationMs) {
+        let temp = entries[j];
+        entries[j] = entries[j + 1];
+        entries[j + 1] = temp;
+      } else if (entries[j].durationMs == entries[j+1].durationMs) {
+        if (entries[j].timestamp > entries[j+1].timestamp) {
+          let temp = entries[j];
+          entries[j] = entries[j + 1];
+          entries[j + 1] = temp;
+        }
+      }
+    }
+  }
+  return entries;
+}
+
+renderLeaderboard(sortLeaderboard(leaderboardData));
+startTimer();	
